@@ -1,14 +1,40 @@
 <html>
     <head>
         <title>RuDi</title>
+        <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+        #nobord {
+        border: 0px solid black;
+        }
+        </style>
     </head>
     <body>
-        <div>
-            <h1><a href="/">From RuDi</a></h1>
-        </div>
-
-        <div>
-            <p>Блиииииинчик не грусти</p>
-        </div>
+      <table id="nobord">
+      <form method="POST" class="post-form">
+      {% csrf_token %}
+      <td id="nobord">{{ form.as_p }}</td>
+      <td id="nobord"><button type="submit">APPLY</button></td>
+      </form>
+      </table>
+      <table>
+      <tr>
+        <th>Garage number</th>
+        <th>model</th>
+        <th>Max. weight, t</th>
+        <th>current weight, t</th>
+        <th>overload, %</th>
+      </tr>
+        {% for truck in trucks %}
+            <tr>
+                <td>{{ truck.garage_number }}</td>
+                <td>{{ truck.model }}</td>
+                <td>{{ truck.model.max_weight }}</td>
+                <td>{{ truck.curr_weight }}</td>
+                <td>{% widthratio truck.curr_weight truck.model.max_weight 100 %}</td>
+            </tr>
+        {% endfor %}
+      </table>
     </body>
 </html>
